@@ -1,0 +1,32 @@
+name: Hardcoregames
+version: ${project.version}
+load: STARTUP
+main: de.amin.hardcoregames.HG
+commands:
+  heal:
+  up:
+  fs:
+  skipinvis:
+  ping:
+  soup:
+  randomtp:
+  getkit:
+  gm:
+  kitinfo:
+  setborder:
+  endgame:
+  kit:
+  forcefeast:
+  feast:
+  test:
+  vanish:
+    aliases:
+      - v
+  invsee:
+  admin:
+  skipcd:
+  stats:
+  forcekit:
+  settime:
+  aura:
+  kitsettings:
