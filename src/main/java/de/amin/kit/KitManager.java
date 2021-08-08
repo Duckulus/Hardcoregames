@@ -7,9 +7,9 @@ import de.amin.mechanics.conversation.KitSearchPromt;
 import org.bukkit.Bukkit;
 import org.bukkit.conversations.ConversationFactory;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
@@ -26,6 +26,16 @@ public class KitManager {
         kitHashMap = new HashMap<>();
         disabledKits = new ArrayList<>();
 
+        Bukkit.getScheduler().scheduleSyncDelayedTask(HG.INSTANCE, new Runnable() {
+            @Override
+            public void run() {
+                init();
+            }
+        }, 5);
+
+    }
+
+    private void init() {
         registerKit(new NoneKit());
         registerKit(new JackhammerKit());
         registerKit(new PhantomKit());
@@ -56,6 +66,8 @@ public class KitManager {
         registerKit(new RevivalKit());
         registerKit(new KunaiKit());
         registerKit(new XrayKit());
+        registerKit(new NeoKit());
+        registerKit(new HermitKit());
 
         kitArray.sort(Comparator.comparing(Kit::getName));
     }

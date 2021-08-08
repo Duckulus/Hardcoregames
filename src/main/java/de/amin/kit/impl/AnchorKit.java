@@ -57,9 +57,11 @@ public class AnchorKit extends Kit implements Listener {
             Bukkit.getScheduler().scheduleSyncDelayedTask(HG.INSTANCE, new Runnable() {
                 @Override
                 public void run() {
-                    target.setVelocity(new Vector(0,0,0));
-                    for(Player p : HG.INSTANCE.getPlayers()){
-                        p.playSound(target.getLocation(), Sound.ANVIL_LAND, 1.0F, 1.0F);
+                    if(e.getFinalDamage()>0){
+                        target.setVelocity(new Vector(0,0,0));
+                        for(Player p : HG.INSTANCE.getPlayers()){
+                            p.playSound(target.getLocation(), Sound.ANVIL_LAND, 1.0F, 1.0F);
+                        }
                     }
                 }
             }, 1L);

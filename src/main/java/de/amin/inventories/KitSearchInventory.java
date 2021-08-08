@@ -1,6 +1,6 @@
 //Created by Duckulus on 04 Jul, 2021 
 
-package de.amin.Inventories;
+package de.amin.inventories;
 
 import de.amin.hardcoregames.HG;
 import de.amin.kit.Kit;

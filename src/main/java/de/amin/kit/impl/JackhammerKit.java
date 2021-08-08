@@ -1,6 +1,6 @@
 package de.amin.kit.impl;
 
-import de.amin.Feast.Feast;
+import de.amin.feast.Feast;
 import de.amin.gamestates.IngameState;
 import de.amin.hardcoregames.HG;
 import de.amin.kit.Kit;

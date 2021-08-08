@@ -1,0 +1,24 @@
+database:
+  host: " "
+  port: " "
+  datbase: " "
+  username: " "
+  password: " "
+game:
+  min_players: 2
+timers:
+  pregame: 180
+  invincibility: 120
+mechanics:
+  launchfactor: 2.0
+  bordersize: 500
+feast:
+  time: 600
+bonusfeast:
+  time: 1200
+pit:
+  time: 2100
+  countdown: 300
+  radius: 50
+gameend:
+  time: 6000

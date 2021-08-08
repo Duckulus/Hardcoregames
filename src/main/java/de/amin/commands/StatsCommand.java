@@ -1,97 +1,83 @@
-//Created by Duckulus on 05 Jul, 2021 
+//Created by Duckulus on 07 Aug, 2021 
 
 package de.amin.commands;
 
-import de.amin.MySQL.Stats;
+import de.amin.hardcoregames.HG;
+import de.amin.stats.StatsGetter;
+import de.amin.utils.UUIDFetcher;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
 import java.util.UUID;
 
 public class StatsCommand implements CommandExecutor {
 
+    private StatsGetter stats;
+
+    public StatsCommand(StatsGetter stats) {
+        this.stats = stats;
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        if(!(sender instanceof Player))return true;
-        Player player = (Player) sender;
+        Bukkit.getScheduler().runTaskAsynchronously(HG.INSTANCE, new Runnable() {
+            @Override
+            public void run() {
+                if((args.length > 1)){
+                    sender.sendMessage("§7Usage§8:§9 /stats [Player]");
+                    return;
+                }
+                String target;
 
-        if(args.length==0){
-            sendStats(player, player.getUniqueId().toString());
-        }else if(args.length==1){
-            OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
-            if(Stats.exists(target.getUniqueId().toString())){
-                sendStats(player, target.getUniqueId().toString());
-            }else {
-                player.sendMessage("§cPlayer never joined the Server.");
+                if(args.length==0){
+                    target = sender.getName();
+                }else {
+                    target = args[0];
+                }
+
+                UUID targetUUID = UUIDFetcher.getUUID(target);
+
+                if(!stats.exists(target)){
+                    sender.sendMessage("§cThat Player never joined the Server!");
+                    return;
+                }
+
+                double kills = stats.get(target, "KILLS");
+                double deaths = stats.get(target, "DEATHS");
+                double kd = 0;
+
+                if(deaths == 0){
+                    kd = kills;
+                }else {
+                    kd = kills/deaths;
+                }
+
+                double gamesPlayed = stats.get(target, "GAMESPLAYED");
+                double wins = stats.get(target, "WINS");
+
+                double probability = 0;
+                if(gamesPlayed!=0){
+                    probability = wins/gamesPlayed * 100;
+                }
+
+                DecimalFormat noDecimal = new DecimalFormat("##");
+                DecimalFormat twoDecumal = new DecimalFormat("##.##");
+
+                sender.sendMessage("§9=====[§bStats§9]=====");
+                sender.sendMessage("§7Name§8: §6" + UUIDFetcher.getName(targetUUID));
+                sender.sendMessage("§7Kills§8: §6" + noDecimal.format(kills));
+                sender.sendMessage("§7Deaths§8: §6" + noDecimal.format(deaths));
+                sender.sendMessage("§7K/D§8: §6" + twoDecumal.format(kd));
+                sender.sendMessage("§7Games Played§8: §6" + noDecimal.format(gamesPlayed));
+                sender.sendMessage("§7Wins§8: §6" + noDecimal.format(wins));
+                sender.sendMessage("§7Win Probability§8: §6" + twoDecumal.format(probability) + "%");
+                sender.sendMessage("§9================");
             }
-        }else {
-            sendUsage(player);
-        }
+        });
 
         return false;
-    }
-
-    private int getKills(String player){
-        return Stats.getKills(player);
-    }
-
-    private int getDeaths(String player){
-        return Stats.getDeaths(player);
-    }
-
-    private int getWins(String player){
-        return Stats.getWins(player);
-    }
-
-    private int getPlayedGames(String player){
-        return Stats.getPlayedGames(player);
-    }
-
-    private String getKD(String player){
-        double kd;
-        String formattedKD;
-        if(getDeaths(player)==0){
-            kd = getKills(player);
-            formattedKD = String.valueOf(kd);
-        }else {
-            kd = ((double) getKills(player)) / getDeaths(player);
-            formattedKD = new DecimalFormat("##.##").format(kd);
-        }
-        return formattedKD;
-    }
-
-    private String getProbability(String player){
-        double probability;
-        String formattedProbability = null;
-
-        if(getWins(player)==0){
-            probability = 0;
-            formattedProbability = new DecimalFormat("##.##").format(probability);
-        }else {
-            probability = (((double)getWins(player)) / getPlayedGames(player)) * 100;
-            formattedProbability = new DecimalFormat("##.##").format(probability);
-        }
-        return formattedProbability;
-    }
-
-    private void sendStats(Player player, String stats){
-        player.sendMessage("§7§m------§r§eStats§7§m------");
-        player.sendMessage("§7Player§8: §9" + Bukkit.getOfflinePlayer(UUID.fromString(stats)).getName());
-        player.sendMessage("§7Kills§8: §9" + getKills(stats));
-        player.sendMessage("§7Deaths§8: §9" + getDeaths(stats));
-        player.sendMessage("§7K/D§8: §9" + getKD(stats));
-        player.sendMessage("§7Games Played§8: §9" + getPlayedGames(stats));
-        player.sendMessage("§7Wins§8: §9" + getWins(stats));
-        player.sendMessage("§7Win Probability§8: §9" + getProbability(stats) + "%");
-        player.sendMessage("§7§m-----------------");
-    }
-
-    private void sendUsage(Player player){
-        player.sendMessage("§7Usage§8:§9 /stats <Player>");
     }
 }

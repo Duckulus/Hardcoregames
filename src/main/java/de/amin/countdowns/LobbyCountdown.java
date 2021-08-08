@@ -13,10 +13,10 @@ import org.bukkit.inventory.ItemStack;
 
 public class LobbyCountdown extends Countdown {
 
-    private FileConfiguration config = HG.INSTANCE.getFileConfig();
+    private FileConfiguration config = HG.INSTANCE.getConfig();
 
-    private final int IDLE_TIME = 15,
-            COUNTDOWN_TIME = (int) config.get("timers.pregame");
+    private final int IDLE_TIME = 30,
+            COUNTDOWN_TIME = config.getInt("timers.pregame");
 
 
     private GameStateManager gameStateManager;

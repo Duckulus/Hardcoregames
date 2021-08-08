@@ -2,7 +2,7 @@
 
 package de.amin.commands;
 
-import de.amin.Feast.Feast;
+import de.amin.feast.Feast;
 import de.amin.gamestates.GameStateManager;
 import de.amin.gamestates.IngameState;
 import de.amin.hardcoregames.HG;

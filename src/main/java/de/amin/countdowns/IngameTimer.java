@@ -1,9 +1,10 @@
 package de.amin.countdowns;
 
-import de.amin.Feast.Bonusfeast;
-import de.amin.Feast.Feast;
-import de.amin.Feast.Minifeast;
+import de.amin.feast.Bonusfeast;
+import de.amin.feast.Feast;
+import de.amin.feast.Minifeast;
 import de.amin.gamestates.GameState;
+import de.amin.gamestates.IngameState;
 import de.amin.hardcoregames.HG;
 import de.amin.mechanics.Pit;
 import de.amin.mechanics.Scoreboards;
@@ -15,7 +16,7 @@ import java.util.Random;
 
 public class IngameTimer extends Countdown {
 
-    private FileConfiguration config = HG.INSTANCE.getFileConfig();
+    private FileConfiguration config = HG.INSTANCE.getConfig();
     private int seconds;
     private int taskID;
 
@@ -30,7 +31,7 @@ public class IngameTimer extends Countdown {
 
 
     public IngameTimer() {
-        seconds = (int) config.get("timers.invincibility");
+        seconds = config.getInt("timers.invincibility");
     }
 
     @Override
@@ -39,6 +40,7 @@ public class IngameTimer extends Countdown {
             @Override
             public void run() {
 
+                if(!(HG.INSTANCE.getGameStateManager().getCurrentGameState() instanceof IngameState))return;
 
                 for (Player p : Bukkit.getOnlinePlayers()) {
 

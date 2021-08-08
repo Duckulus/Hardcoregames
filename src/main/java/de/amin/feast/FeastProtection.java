@@ -1,6 +1,6 @@
 //Created by Duckulus on 27 Jun, 2021 
 
-package de.amin.Feast;
+package de.amin.feast;
 
 import de.amin.gamestates.GameState;
 import de.amin.gamestates.IngameState;

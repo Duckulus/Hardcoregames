@@ -2,7 +2,7 @@
 
 package de.amin.mechanics.conversation;
 
-import de.amin.Inventories.KitSearchInventory;
+import de.amin.inventories.KitSearchInventory;
 import de.amin.hardcoregames.HG;
 import de.amin.kit.KitManager;
 import fr.minuskube.inv.SmartInventory;

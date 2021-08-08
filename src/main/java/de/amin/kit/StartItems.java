@@ -2,7 +2,7 @@
 
 package de.amin.kit;
 
-import de.amin.Inventories.StartItemInventory;
+import de.amin.inventories.StartItemInventory;
 import de.amin.gamestates.LobbyState;
 import de.amin.hardcoregames.HG;
 import de.amin.utils.ItemBuilder;
@@ -10,7 +10,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -71,12 +70,5 @@ public class StartItems implements Listener {
         StartItemInventory.INVENTORY.open(e.getPlayer());
     }
 
-    @EventHandler
-    public void onBucket(PlayerBucketFillEvent e){
-        if(!e.getItemStack().getItemMeta().getLore().equals(bucketLore))return;
-        if(e.getItemStack().getType().equals(Material.LAVA_BUCKET)){
-            e.setCancelled(true);
-        }
-    }
 
 }

@@ -1,7 +1,7 @@
 package de.amin.mechanics;
 
-import de.amin.Feast.Bonusfeast;
-import de.amin.Feast.Feast;
+import de.amin.feast.Bonusfeast;
+import de.amin.feast.Feast;
 import de.amin.gamestates.*;
 import de.amin.hardcoregames.HG;
 import org.bukkit.Bukkit;
