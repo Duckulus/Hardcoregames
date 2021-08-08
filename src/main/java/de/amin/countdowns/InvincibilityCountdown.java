@@ -11,8 +11,8 @@ import org.bukkit.entity.Player;
 
 public class InvincibilityCountdown extends Countdown{
 
-    private FileConfiguration config = HG.INSTANCE.getFileConfig();
-    private final int INVINCIBILITY_TIME = (int)config.get("timers.invincibility");
+    private FileConfiguration config = HG.INSTANCE.getConfig();
+    private final int INVINCIBILITY_TIME = config.getInt("timers.invincibility");
     private GameStateManager gameStateManager;
     private int seconds;
     private int taskID;

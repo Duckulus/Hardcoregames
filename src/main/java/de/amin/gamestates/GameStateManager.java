@@ -38,4 +38,24 @@ public class GameStateManager {
     public GameState getCurrentGameState() {
         return currentGameState;
     }
+
+    public GameState[] getGameStates() {
+        return gameStates;
+    }
+
+    public LobbyState getLobbyState(){
+        return (LobbyState) gameStates[GameState.LOBBY_STATE];
+    }
+
+    public InvincibilityState getInvincibilityState(){
+        return (InvincibilityState) gameStates[GameState.INVINCIBILITY_STATE];
+    }
+
+    public IngameState getIngameState(){
+        return (IngameState) gameStates[GameState.INGAME_STATE];
+    }
+
+    public EndingState getEndingState(){
+        return (EndingState) gameStates[GameState.ENDING_STATE];
+    }
 }

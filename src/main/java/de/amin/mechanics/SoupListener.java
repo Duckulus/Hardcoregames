@@ -22,7 +22,11 @@ public class SoupListener implements Listener {
                         event.getPlayer().getItemInHand().setType(Material.BOWL);
                         event.getPlayer().getItemInHand().setItemMeta(meta);
                         event.getPlayer().setItemInHand(bowl);
-                        event.getPlayer().setHealth(event.getPlayer().getHealth() + heal);
+                        try{
+                            event.getPlayer().setHealth(event.getPlayer().getHealth() + heal);
+                        }catch (IllegalArgumentException e){
+                            event.getPlayer().setHealth(event.getPlayer().getMaxHealth());
+                        }
                     } else if (event.getPlayer().getHealth() < 20.0D && event.getPlayer().getHealth() > (20 - heal)) {
                         event.getPlayer().setHealth(20.0D);
                         event.getPlayer().getItemInHand().setType(Material.BOWL);

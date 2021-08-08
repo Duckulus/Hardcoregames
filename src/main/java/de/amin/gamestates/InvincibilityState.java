@@ -1,10 +1,11 @@
 package de.amin.gamestates;
 
-import de.amin.MySQL.Stats;
 import de.amin.countdowns.InvincibilityCountdown;
 import de.amin.hardcoregames.HG;
+import de.amin.kit.impl.HermitKit;
 import de.amin.kit.KitManager;
 import de.amin.kit.impl.SurpriseKit;
+import de.amin.mechanics.RandomTP;
 import de.amin.mechanics.Scoreboards;
 import de.amin.utils.ItemBuilder;
 import org.bukkit.Material;
@@ -28,16 +29,23 @@ public class InvincibilityState extends GameState{
     public void start() {
         countdown.start();
         HG.INSTANCE.setPlayersAtStart(HG.INSTANCE.getPlayers().size());
+        HermitKit.run();
         for(Player p : HG.INSTANCE.getPlayers()){
 
             //give Player random kit if surprise
-            if(kitManager.getKitHashMap().get(p.getName()) instanceof SurpriseKit){
+            if(kitManager.getKit(p) instanceof SurpriseKit){
                 int random = new Random().nextInt(kitManager.getKitArray().size());
                 kitManager.setKit(p.getName(), kitManager.getKitArray().get(random));
+            }else if(kitManager.getKit(p) instanceof HermitKit) {
+                if(HermitKit.hermitPlayers.containsKey(p.getName())){
+                    p.teleport(RandomTP.getHighestPoint(HermitKit.hermitPlayers.get(p.getName())));
+                }else {
+                    RandomTP.randomTeleport(p);
+                }
             }
 
 
-            //Stats.incrementPlayedGames(p.getUniqueId().toString());
+            HG.INSTANCE.getStats().increment(p.getName(), "GAMESPLAYED");
             p.getInventory().clear();
             HG.INSTANCE.getKitManager().getKitHashMap().get(p.getName()).giveItems(p);
             HG.INSTANCE.getStartItems().giveItem(p);

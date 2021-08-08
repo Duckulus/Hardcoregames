@@ -1,6 +1,6 @@
 //Created by Duckulus on 08 Jul, 2021 
 
-package de.amin.Feast;
+package de.amin.feast;
 
 import de.amin.gamestates.IngameState;
 import de.amin.hardcoregames.HG;

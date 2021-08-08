@@ -9,7 +9,6 @@ import de.amin.hardcoregames.HG;
 import de.amin.kit.KitManager;
 import de.amin.kit.KitSelector;
 import de.amin.kit.StartItems;
-import de.amin.kit.impl.NoneKit;
 import de.amin.managers.VanishManager;
 import de.amin.mechanics.AdminMode;
 import de.amin.mechanics.RandomTP;
@@ -27,7 +26,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class ConnectionListener implements Listener {
 
@@ -44,6 +42,7 @@ public class ConnectionListener implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         HG plugin = HG.INSTANCE;
         KitManager kitManager = HG.INSTANCE.getKitManager();
+        plugin.getStats().createPlayer(e.getPlayer());
         if (HG.INSTANCE.getGameStateManager().getCurrentGameState() instanceof LobbyState) {
 
             //vanish vanished players

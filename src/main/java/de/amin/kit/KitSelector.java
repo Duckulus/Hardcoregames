@@ -1,6 +1,6 @@
 package de.amin.kit;
 
-import de.amin.Inventories.KitSelectorInventory;
+import de.amin.inventories.KitSelectorInventory;
 import de.amin.gamestates.LobbyState;
 import de.amin.hardcoregames.HG;
 import org.bukkit.Material;

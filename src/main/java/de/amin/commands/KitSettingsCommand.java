@@ -2,7 +2,7 @@
 
 package de.amin.commands;
 
-import de.amin.Inventories.KitSettingListInventory;
+import de.amin.inventories.KitSettingListInventory;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

@@ -30,3 +30,5 @@ commands:
   settime:
   aura:
   kitsettings:
+  setspawn:
+  stats:

@@ -2,11 +2,12 @@ package de.amin.hardcoregames;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
-import de.amin.Feast.FeastProtection;
-import de.amin.MySQL.MySQL;
+import com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource;
+import de.amin.feast.FeastProtection;
 import de.amin.commands.*;
 import de.amin.gamestates.GameState;
 import de.amin.gamestates.GameStateManager;
+import de.amin.kit.impl.HermitKit;
 import de.amin.kit.KitManager;
 import de.amin.kit.KitSelector;
 import de.amin.kit.StartItems;
@@ -17,6 +18,7 @@ import de.amin.managers.VanishManager;
 import de.amin.mechanics.*;
 import de.amin.managers.ItemManager;
 import de.amin.utils.CustomDeathMessages;
+import de.amin.stats.StatsGetter;
 import fr.minuskube.inv.InventoryManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -28,6 +30,8 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import javax.sql.DataSource;
 import java.io.File;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -45,8 +49,8 @@ public final class HG extends JavaPlugin implements PluginMessageListener {
     private StartItems startItems;
     private SpectatorMode specMode;
 
-    public static MySQL mySQL;
     private DataSource dataSource;
+    private StatsGetter stats;
 
     private HashMap<String, Long> cooldown;
     private HashMap<String, Long> launchedPlayers;
@@ -55,6 +59,7 @@ public final class HG extends JavaPlugin implements PluginMessageListener {
 
     private File file = new File("plugins//Hardcoregames//config.yml");
     private FileConfiguration config = getConfig();
+    public static boolean isConnected;
 
     public final String PREFIX = "§a§l> §r";
 
@@ -79,36 +84,16 @@ public final class HG extends JavaPlugin implements PluginMessageListener {
         Bukkit.unloadWorld("world", false);
         File folder = new File("world");
         deleteFolder(folder);
-            if(!file.exists()) {
-//                try {
-//                    file.createNewFile();
-//
-//                    config.save(file);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-            }
-
     }
 
     @Override
     public void onEnable() {
-        config.addDefault("game.min_players", 2);
-        config.addDefault("timers.pregame", 180);
-        config.addDefault("timers.invincibility", 120);
-        config.addDefault("mechanics.launchfactor", 2.0);
-        config.addDefault("mechanics.bordersize", 500);
-        config.addDefault("feast.time", 600);
-        config.addDefault("bonusfeast.time", 1200);
-        config.addDefault("gameend.time", 6000);
-        config.addDefault("pit.time", 2400-5*60);
-        config.addDefault("pit.countdown", 5*60);
-        config.addDefault("pit.radius", 50);
-        config.options().copyDefaults(true);
-        saveConfig();
-
         INSTANCE = this;
-
+        saveDefaultConfig();
+        config = getConfig();
+        dataSource = initMySql();
+        stats = new StatsGetter(dataSource);
+        stats.createTable();
 
 
         players = new ArrayList<>();
@@ -137,7 +122,33 @@ public final class HG extends JavaPlugin implements PluginMessageListener {
         init();
         initKits();
 
+
         getServer().getConsoleSender().sendMessage(PREFIX + ChatColor.AQUA + "Plugin initialized succesfully");
+    }
+
+    private DataSource initMySql() {
+        MysqlConnectionPoolDataSource source = new MysqlConnectionPoolDataSource();
+
+        source.setServerName(getConfig().getString("database.host"));
+        source.setPortNumber(getConfig().getInt("database.port"));
+        source.setDatabaseName(getConfig().getString("database.database"));
+        source.setUser(getConfig().getString("database.username"));
+        source.setPassword(getConfig().getString("database.password"));
+
+
+        try (Connection conn = source.getConnection()) {
+            if (!conn.isValid(1000)) {
+                isConnected = false;
+                getLogger().info("[MySQL] Could not establish DATABASE CONNECTION");
+            }else {
+                getLogger().info("[MySql] Connected!");
+                isConnected = true;
+            }
+        } catch (SQLException throwables) {
+            isConnected = false;
+            throwables.printStackTrace();
+        }
+        return source;
     }
 
     @Override
@@ -192,11 +203,12 @@ public final class HG extends JavaPlugin implements PluginMessageListener {
         getCommand("invsee").setExecutor(new InvseeCommand());
         getCommand("admin").setExecutor(new AdminCommand());
         getCommand("skipcd").setExecutor(new SkipcdCommand());
-        getCommand("stats").setExecutor(new StatsCommand());
         getCommand("forcekit").setExecutor(new ForceKitCommand(gameStateManager, kitManager));
         getCommand("settime").setExecutor(new SetTimeCommand());
         getCommand("aura").setExecutor(new AuraCommand());
         getCommand("kitsettings").setExecutor(new KitSettingsCommand());
+        getCommand("setspawn").setExecutor(new HermitKit());
+        getCommand("stats").setExecutor(new StatsCommand(stats));
     }
 
 
@@ -228,12 +240,10 @@ public final class HG extends JavaPlugin implements PluginMessageListener {
         pm.registerEvents(new RevivalKit(), this);
         pm.registerEvents(new KunaiKit(), this);
         pm.registerEvents(new XrayKit(), this);
+        pm.registerEvents(new NeoKit(), this);
+        pm.registerEvents(new HermitKit(), this);
     }
 
-    private void connectMySql() {
-        mySQL = new MySQL("remotemysql.com", "3ScbLV7LoQ", "3ScbLV7LoQ", "wSMRQ2Abnn");
-        mySQL.update("CREATE TABLE IF NOT EXISTS Stats(UUID varchar(64), KILLS int, DEATHS int, WINS int, PLAYEDGAMES int)");
-    }
 
 
 
@@ -314,5 +324,13 @@ public final class HG extends JavaPlugin implements PluginMessageListener {
 
     public SpectatorMode getSpecMode() {
         return specMode;
+    }
+
+    public DataSource getDataSource() {
+        return dataSource;
+    }
+
+    public StatsGetter getStats() {
+        return stats;
     }
 }

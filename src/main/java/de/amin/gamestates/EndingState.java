@@ -1,6 +1,5 @@
 package de.amin.gamestates;
 
-import de.amin.MySQL.Stats;
 import de.amin.hardcoregames.HG;
 import org.bukkit.*;
 import org.bukkit.entity.EntityType;
@@ -17,7 +16,7 @@ public class EndingState extends GameState {
         if (HG.INSTANCE.getPlayers().size() == 1) {
             for (Player p : HG.INSTANCE.getPlayers()) {
                 p.setVelocity(new Vector(0, 2, 0));
-                //Stats.incrementWins(p.getUniqueId().toString());
+                HG.INSTANCE.getStats().increment(p.getName(), "WINS");
 
                 Bukkit.getScheduler().scheduleSyncRepeatingTask(HG.INSTANCE, () -> {
                     if (count < 5) {

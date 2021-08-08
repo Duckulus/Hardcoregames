@@ -1,6 +1,6 @@
 //Created by Duckulus on 27 Jun, 2021 
 
-package de.amin.Feast;
+package de.amin.feast;
 
 import de.amin.hardcoregames.HG;
 import org.bukkit.*;
@@ -18,7 +18,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Feast {
 
-    private static boolean isFeast;
+    public static boolean isFeast;
     private static boolean isAnnounced;
 
 
@@ -101,6 +101,7 @@ public class Feast {
         taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(HG.INSTANCE, new Runnable() {
             @Override
             public void run() {
+                if(Feast.isFeast)Bukkit.getScheduler().cancelTask(taskID);
                 switch (secondsToFeast) {
                     case 119:
                         for(Entity e : Bukkit.getWorld("world").getNearbyEntities(new Location(Bukkit.getWorld("world"), xPos, yPos, zPos), 30, 30, 30)){
@@ -132,7 +133,7 @@ public class Feast {
                         for(Player current : Bukkit.getOnlinePlayers()){
                             current.playSound(current.getLocation(), Sound.NOTE_PLING, 1.0F, 1.0F);
                         }
-                        spawnChests(new Location(Bukkit.getWorld("world"), xPos, yPos, zPos));
+                        spawnChests();
                         isFeast = true;
                         Bukkit.getScheduler().cancelTask(taskID);
                         break;
@@ -160,14 +161,15 @@ public class Feast {
             for (int z = -radius; z <radius ; z++) {
                 Block block = location.clone().add(x,0, z).getBlock();
                 if(block.getLocation().distance(location)<radius) {
-                    block.setType(Material.GRASS);
+                    block.setType(material);
                     blocks.add(block);
                 }
             }
         }
     }
 
-    public void spawnChests(Location location) {
+    public void spawnChests() {
+        Location location = new Location(Bukkit.getWorld("world"), xPos, yPos, zPos);
         Location origin = location.clone().add(0,1,0);
         origin.clone().getBlock().setType(Material.ENCHANTMENT_TABLE);
 
