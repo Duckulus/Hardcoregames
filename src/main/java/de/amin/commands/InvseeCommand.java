@@ -14,7 +14,7 @@ public class InvseeCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if(sender instanceof Player){
             Player player = (Player) sender;
-            if(!player.hasPermission("invsee.invsee")){
+            if(!player.hasPermission("hg.invsee")){
                 player.sendMessage("§cInsufficient permissions");
                 return true;
             }

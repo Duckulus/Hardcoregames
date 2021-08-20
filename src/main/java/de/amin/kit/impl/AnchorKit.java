@@ -59,6 +59,7 @@ public class AnchorKit extends Kit implements Listener {
                 public void run() {
                     if(e.getFinalDamage()>0){
                         target.setVelocity(new Vector(0,0,0));
+                        e.setDamage(e.getFinalDamage() * 0.7);
                         for(Player p : HG.INSTANCE.getPlayers()){
                             p.playSound(target.getLocation(), Sound.ANVIL_LAND, 1.0F, 1.0F);
                         }

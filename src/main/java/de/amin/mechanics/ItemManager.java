@@ -1,6 +1,6 @@
 //Created by Duckulus on 30 Jun, 2021 
 
-package de.amin.managers;
+package de.amin.mechanics;
 
 import de.amin.hardcoregames.HG;
 import org.bukkit.Bukkit;

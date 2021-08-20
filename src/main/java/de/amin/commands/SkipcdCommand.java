@@ -14,7 +14,7 @@ public class SkipcdCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if(sender instanceof Player){
             Player player = (Player) sender;
-            if(!player.hasPermission("cooldown.skip")){
+            if(!player.hasPermission("hg.skipcd")){
                 player.sendMessage("§cInsufficient Permissions.");
                 return true;
             }

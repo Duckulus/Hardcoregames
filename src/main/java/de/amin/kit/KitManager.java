@@ -7,6 +7,7 @@ import de.amin.mechanics.conversation.KitSearchPromt;
 import org.bukkit.Bukkit;
 import org.bukkit.conversations.ConversationFactory;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -19,12 +20,14 @@ public class KitManager {
     private ArrayList<Kit> kitArray;
     private HashMap<String, Kit> kitHashMap;
     private ArrayList<Kit> disabledKits;
+    private HG plugin;
     private Kit forcedKit;
 
-    public KitManager(){
+    public KitManager(HG plugin){
         kitArray = new ArrayList<>();
         kitHashMap = new HashMap<>();
         disabledKits = new ArrayList<>();
+        this.plugin = plugin;
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(HG.INSTANCE, new Runnable() {
             @Override
@@ -68,8 +71,14 @@ public class KitManager {
         registerKit(new XrayKit());
         registerKit(new NeoKit());
         registerKit(new HermitKit());
+        registerKit(new GliderKit());
+        registerKit(new BackpackerKit(this, plugin.getGameStateManager()));
+        registerKit(new JokerKit(plugin));
+
+        registerKitListeners();
 
         kitArray.sort(Comparator.comparing(Kit::getName));
+
     }
 
     public void setKit(String playerName, Kit kit){
@@ -83,8 +92,16 @@ public class KitManager {
         Bukkit.getPlayer(playerName).closeInventory();
     }
 
-    public void registerKit(Kit kit){
+    private void registerKit(Kit kit){
         kitArray.add(kit);
+    }
+
+    private void registerKitListeners() {
+        for(Kit kit : kitArray){
+            if(kit instanceof Listener){
+                Bukkit.getPluginManager().registerEvents((Listener) kit, plugin);
+            }
+        }
     }
 
     public ArrayList<Kit> getKitArray() {

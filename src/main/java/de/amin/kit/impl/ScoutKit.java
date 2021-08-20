@@ -6,7 +6,7 @@ import de.amin.hardcoregames.HG;
 import de.amin.kit.Kit;
 import de.amin.kit.KitManager;
 import de.amin.kit.KitSetting;
-import de.amin.managers.ItemManager;
+import de.amin.mechanics.ItemManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

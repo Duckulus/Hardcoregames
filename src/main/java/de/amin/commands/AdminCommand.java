@@ -21,7 +21,7 @@ public class AdminCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if(sender instanceof Player){
             Player player = (Player) sender;
-            if(!player.hasPermission("admin.adminmode")){
+            if(!player.hasPermission("hg.adminmode")){
                 player.sendMessage("§cInsufficient permissions.");
                 return true;
             }

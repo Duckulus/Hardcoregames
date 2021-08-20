@@ -14,7 +14,7 @@ public class GameModeCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if(!(sender instanceof Player))return true;
         Player p = (Player) sender;
-        if(!p.hasPermission("hardcoregames.gm"))return true;
+        if(!p.hasPermission("hg.gm"))return true;
         if(!(args.length == 1)){
             sendUsage(p);
             return true;

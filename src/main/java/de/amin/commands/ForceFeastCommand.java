@@ -17,7 +17,7 @@ public class ForceFeastCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         GameStateManager gameStateManager = HG.INSTANCE.getGameStateManager();
-        if(!sender.hasPermission("feast.force"))return false;
+        if(!sender.hasPermission("hg.forcefeast"))return false;
         if(!(gameStateManager.getCurrentGameState() instanceof IngameState))return false;
         Player player = (Player) sender;
         if(Feast.isFeast()){

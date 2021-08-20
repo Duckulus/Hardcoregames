@@ -9,7 +9,7 @@ import de.amin.hardcoregames.HG;
 import de.amin.kit.KitManager;
 import de.amin.kit.KitSelector;
 import de.amin.kit.StartItems;
-import de.amin.managers.VanishManager;
+import de.amin.mechanics.VanishManager;
 import de.amin.mechanics.AdminMode;
 import de.amin.mechanics.RandomTP;
 import de.amin.mechanics.Scoreboards;
@@ -82,7 +82,7 @@ public class ConnectionListener implements Listener {
             }
         } else {
             e.setJoinMessage(null);
-            if(!e.getPlayer().isOp()){
+            if(!e.getPlayer().hasPermission("hg.adminmode")){
                 HG.INSTANCE.getSpecMode().activate(e.getPlayer());
             }else {
                 HG.INSTANCE.getAdminMode().activate(e.getPlayer());

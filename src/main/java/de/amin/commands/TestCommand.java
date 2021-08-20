@@ -2,21 +2,42 @@
 
 package de.amin.commands;
 
+import de.amin.hardcoregames.HG;
+import net.minecraft.server.v1_8_R3.BlockPosition;
+import net.minecraft.server.v1_8_R3.PacketPlayOutExplosion;
+import net.minecraft.server.v1_8_R3.Vec3D;
+import org.bukkit.Bukkit;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class TestCommand implements CommandExecutor {
 
-    private int i;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        spawnCircle(((Player)sender).getLocation(), Integer.parseInt(args[0]));
+        if(!sender.hasPermission("hg.test"))return true;
+
+        Player player = (Player) sender;
+
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutExplosion(
+                Double.MAX_VALUE,
+                Double.MAX_VALUE,
+                Double.MAX_VALUE,
+                Float.MAX_VALUE,
+                Collections.emptyList(),
+                new Vec3D(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE)
+        ));
         return false;
     }
 

@@ -2,7 +2,7 @@ package de.amin.gamestates;
 
 import de.amin.hardcoregames.HG;
 import de.amin.kit.KitManager;
-import de.amin.managers.ItemManager;
+import de.amin.mechanics.ItemManager;
 
 public class GameStateManager {
 

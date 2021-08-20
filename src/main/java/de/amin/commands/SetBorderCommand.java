@@ -12,7 +12,7 @@ public class SetBorderCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        if(!sender.hasPermission("hardcoregames.border"))return true;
+        if(!sender.hasPermission("hg.setborder"))return true;
         FileConfiguration config = HG.INSTANCE.getFileConfig();
         if(!(args.length==1)){
             sender.sendMessage("§7Usage§8: §9/setborder [size]");

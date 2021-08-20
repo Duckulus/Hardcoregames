@@ -3,7 +3,7 @@ package de.amin.gamestates;
 import de.amin.countdowns.IngameTimer;
 import de.amin.hardcoregames.HG;
 import de.amin.kit.impl.ScoutKit;
-import de.amin.managers.ItemManager;
+import de.amin.mechanics.ItemManager;
 import org.bukkit.Bukkit;
 
 public class IngameState extends GameState{

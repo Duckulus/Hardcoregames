@@ -17,7 +17,7 @@ public class GetKitCommand implements CommandExecutor {
             String playerKitName = HG.INSTANCE.getKitManager().getKitHashMap().get(player.getName()).getName();
             player.sendMessage( prefix + "§7Your Kit: §a" + playerKitName);
         }else if(args.length==1){
-            if(!player.hasPermission("hardcoregames.seekits")){
+            if(!player.hasPermission("hg.getkit")){
                 player.sendMessage(prefix + "Insufficient Permissions");
                 return true;
             }

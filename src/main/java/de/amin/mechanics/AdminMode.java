@@ -7,7 +7,6 @@ import de.amin.gamestates.GameStateManager;
 import de.amin.gamestates.IngameState;
 import de.amin.gamestates.InvincibilityState;
 import de.amin.hardcoregames.HG;
-import de.amin.managers.VanishManager;
 import de.amin.utils.ItemBuilder;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
