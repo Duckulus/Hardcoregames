@@ -1,6 +1,7 @@
 name: Hardcoregames
 version: ${project.version}
 load: STARTUP
+api-version: 1.17
 main: de.amin.hardcoregames.HG
 commands:
   heal:
@@ -31,4 +32,4 @@ commands:
   aura:
   kitsettings:
   setspawn:
-  stats:
+  forcepit:

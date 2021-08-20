@@ -14,16 +14,17 @@ import org.bukkit.scoreboard.ScoreboardManager;
 
 public class Scoreboards {
 
-    private static ScoreboardManager manager = Bukkit.getScoreboardManager();
-    private static GameStateManager gameStateManager = HG.INSTANCE.getGameStateManager();
-    private static String ip = "§ihardcoregames.hg";
+    private static final ScoreboardManager manager = Bukkit.getScoreboardManager();
+    private static final GameStateManager gameStateManager = HG.INSTANCE.getGameStateManager();
+    private static final String ip = HG.INSTANCE.getConfig().getString("scoreboard.ip").replace("&", "§");
+    private static final String title = HG.INSTANCE.getConfig().getString("scoreboard.title").replace("&", "§");
 
     public static void pregameScoreboard(Player player){
         Scoreboard scoreboard = (Scoreboard) manager.getNewScoreboard();
 
         Objective objective = scoreboard.registerNewObjective("pregame", "dummy");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-        objective.setDisplayName(ChatColor.WHITE + ChatColor.BOLD.toString() + "HardcoreGames");
+        objective.setDisplayName(ChatColor.WHITE + ChatColor.BOLD.toString() + title);
         objective.getScore(ChatColor.RED + ChatColor.BOLD.toString() + "Starting in").setScore(10);
         if(gameStateManager.getCurrentGameState() instanceof LobbyState) {
             objective.getScore(" " + (formatTime(((LobbyState) gameStateManager.getCurrentGameState()).getCountdown().getSeconds()))).setScore(9);
@@ -44,7 +45,7 @@ public class Scoreboards {
 
         Objective objective = scoreboard.registerNewObjective("invincibility", "dummy");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-        objective.setDisplayName(ChatColor.WHITE + ChatColor.BOLD.toString() + "HardcoreGames");
+        objective.setDisplayName(ChatColor.WHITE + ChatColor.BOLD.toString() + title);
         objective.getScore(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Invincible for").setScore(10);
         if(gameStateManager.getCurrentGameState() instanceof InvincibilityState) {
             objective.getScore(" " + (formatTime(((InvincibilityState) gameStateManager.getCurrentGameState()).getCountdown().getSeconds()))).setScore(9);
@@ -65,7 +66,7 @@ public class Scoreboards {
 
         Objective objective = scoreboard.registerNewObjective("ingame", "dummy");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-        objective.setDisplayName(ChatColor.WHITE + ChatColor.BOLD.toString() + "HardcoreGames");
+        objective.setDisplayName(ChatColor.WHITE + ChatColor.BOLD.toString() + title);
         objective.getScore(ChatColor.GREEN + ChatColor.BOLD.toString() + "Elapsed Time").setScore(10);
         if(gameStateManager.getCurrentGameState() instanceof IngameState) {
             objective.getScore(" " + (formatTime(((IngameState) gameStateManager.getCurrentGameState()).getTimer().getSeconds()))).setScore(9);
@@ -87,7 +88,7 @@ public class Scoreboards {
 
         Objective objective = scoreboard.registerNewObjective("ingame", "dummy");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-        objective.setDisplayName(ChatColor.WHITE + ChatColor.BOLD.toString() + "HardcoreGames");
+        objective.setDisplayName(ChatColor.WHITE + ChatColor.BOLD.toString() + title);
         objective.getScore(ChatColor.GREEN + ChatColor.BOLD.toString() + "Elapsed Time").setScore(14);
         if(gameStateManager.getCurrentGameState() instanceof IngameState) {
             objective.getScore(" " + (formatTime(((IngameState) gameStateManager.getCurrentGameState()).getTimer().getSeconds()))).setScore(13);
@@ -114,7 +115,7 @@ public class Scoreboards {
 
         Objective objective = scoreboard.registerNewObjective("ingame", "dummy");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-        objective.setDisplayName(ChatColor.WHITE + ChatColor.BOLD.toString() + "HardcoreGames");
+        objective.setDisplayName(ChatColor.WHITE + ChatColor.BOLD.toString() + title);
         objective.getScore(ChatColor.GREEN + ChatColor.BOLD.toString() + "Elapsed Time").setScore(14);
         if(gameStateManager.getCurrentGameState() instanceof IngameState) {
             objective.getScore(" " + (formatTime(((IngameState) gameStateManager.getCurrentGameState()).getTimer().getSeconds()))).setScore(13);
@@ -143,7 +144,7 @@ public class Scoreboards {
 
         Objective objective = scoreboard.registerNewObjective("ingame", "dummy");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-        objective.setDisplayName(ChatColor.WHITE + ChatColor.BOLD.toString() + "HardcoreGames");
+        objective.setDisplayName(ChatColor.WHITE + ChatColor.BOLD.toString() + title);
         objective.getScore(ChatColor.GREEN + ChatColor.BOLD.toString() + "Elapsed Time").setScore(14);
         if(gameStateManager.getCurrentGameState() instanceof IngameState) {
             objective.getScore(" " + (formatTime(((IngameState) gameStateManager.getCurrentGameState()).getTimer().getSeconds()))).setScore(13);
@@ -172,7 +173,7 @@ public class Scoreboards {
 
         Objective objective = scoreboard.registerNewObjective("ingame", "dummy");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-        objective.setDisplayName(ChatColor.WHITE + ChatColor.BOLD.toString() + "HardcoreGames");
+        objective.setDisplayName(ChatColor.WHITE + ChatColor.BOLD.toString() + title);
         objective.getScore(ChatColor.GREEN + ChatColor.BOLD.toString() + "Elapsed Time").setScore(14);
         if(gameStateManager.getCurrentGameState() instanceof IngameState) {
             objective.getScore(" " + (formatTime(((IngameState) gameStateManager.getCurrentGameState()).getTimer().getSeconds()))).setScore(13);
@@ -185,7 +186,7 @@ public class Scoreboards {
         objective.getScore(" §f" + HG.INSTANCE.getPlayers().size() + "/"  + HG.INSTANCE.getPlayersAtStart()).setScore(6);
         objective.getScore(" ").setScore(5);
         objective.getScore("§6§lPit").setScore(4);
-        objective.getScore("§f  in " + formatTime(timeToPit)).setScore(3);
+        objective.getScore("§f  in " + formatTime(pit.getSeconds())).setScore(3);
         objective.getScore("      ").setScore(2);
         objective.getScore(ip).setScore(1);
         player.setScoreboard(scoreboard);
@@ -199,7 +200,7 @@ public class Scoreboards {
 
         Objective objective = scoreboard.registerNewObjective("ingame", "dummy");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-        objective.setDisplayName(ChatColor.WHITE + ChatColor.BOLD.toString() + "HardcoreGames");
+        objective.setDisplayName(ChatColor.WHITE + ChatColor.BOLD.toString() + title);
         objective.getScore(ChatColor.GREEN + ChatColor.BOLD.toString() + "Elapsed Time").setScore(14);
         if(gameStateManager.getCurrentGameState() instanceof IngameState) {
             objective.getScore(" " + (formatTime(seconds))).setScore(13);

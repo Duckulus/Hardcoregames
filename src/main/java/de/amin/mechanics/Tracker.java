@@ -2,6 +2,7 @@
 
 package de.amin.mechanics;
 
+import com.avaje.ebean.validation.NotNull;
 import de.amin.hardcoregames.HG;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -32,16 +33,17 @@ public class Tracker implements Listener {
         }
     }
 
+
     private Player getNearestPlayer(Player player){
         double distance = Double.MAX_VALUE;
         Player target = null;
-        for(Player current : Bukkit.getOnlinePlayers()){
-            if(HG.INSTANCE.getPlayers().contains(target)){
+        for(Player current : HG.INSTANCE.getPlayers()){
                 if(current!=player && current.getLocation().distance(player.getLocation())<distance
                 && current.getLocation().distance(player.getLocation())>=minDistance){
                     target = current;
+                    distance = current.getLocation().distance(player.getLocation());
                 }
-            }
+
         }
         return target;
     }

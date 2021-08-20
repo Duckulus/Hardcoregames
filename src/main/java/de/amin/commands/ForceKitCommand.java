@@ -10,7 +10,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.json.simple.JSONObject;
 
 public class ForceKitCommand implements CommandExecutor {
 
@@ -26,7 +25,7 @@ public class ForceKitCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (!(sender instanceof Player)) return true;
         Player player = (Player) sender;
-        if (!player.hasPermission("kit.force")) return true;
+        if (!player.hasPermission("hg.forcekit")) return true;
         if (!(gameStateManager.getCurrentGameState() instanceof LobbyState)) {
             player.sendMessage("§cThis command cannot be used at this stage of the game.");
             return true;

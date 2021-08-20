@@ -14,9 +14,9 @@ import de.amin.kit.StartItems;
 import de.amin.kit.impl.*;
 import de.amin.kit.impl.gladiator.GladiatorKit;
 import de.amin.listeners.*;
-import de.amin.managers.VanishManager;
+import de.amin.mechanics.VanishManager;
 import de.amin.mechanics.*;
-import de.amin.managers.ItemManager;
+import de.amin.mechanics.ItemManager;
 import de.amin.utils.CustomDeathMessages;
 import de.amin.stats.StatsGetter;
 import fr.minuskube.inv.InventoryManager;
@@ -45,7 +45,6 @@ public final class HG extends JavaPlugin implements PluginMessageListener {
     private VanishManager vanishManager;
     private AdminMode adminMode;
     private InventoryManager inventoryManager;
-    private RecraftNerf recraftNerf;
     private StartItems startItems;
     private SpectatorMode specMode;
 
@@ -57,7 +56,7 @@ public final class HG extends JavaPlugin implements PluginMessageListener {
     private HashMap<String, Integer> kills;
     private int playersAtStart;
 
-    private File file = new File("plugins//Hardcoregames//config.yml");
+    private final File file = new File("plugins//Hardcoregames//config.yml");
     private FileConfiguration config = getConfig();
     public static boolean isConnected;
 
@@ -92,7 +91,7 @@ public final class HG extends JavaPlugin implements PluginMessageListener {
         saveDefaultConfig();
         config = getConfig();
         dataSource = initMySql();
-        stats = new StatsGetter(dataSource);
+        stats = new StatsGetter(this, dataSource);
         stats.createTable();
 
 
@@ -100,11 +99,11 @@ public final class HG extends JavaPlugin implements PluginMessageListener {
 
         itemManager = new ItemManager();
         vanishManager = new VanishManager();
-        kitManager = new KitManager();
+        kitManager = new KitManager(this);
         gameStateManager = new GameStateManager(this, kitManager, itemManager);
         gameStateManager.setGameState(GameState.LOBBY_STATE);
         adminMode = new AdminMode();
-        recraftNerf = new RecraftNerf(config, gameStateManager);
+        new RecraftNerf(config, gameStateManager);
         startItems = new StartItems();
         specMode = new SpectatorMode();
 
@@ -120,7 +119,6 @@ public final class HG extends JavaPlugin implements PluginMessageListener {
 
 
         init();
-        initKits();
 
 
         getServer().getConsoleSender().sendMessage(PREFIX + ChatColor.AQUA + "Plugin initialized succesfully");
@@ -209,43 +207,8 @@ public final class HG extends JavaPlugin implements PluginMessageListener {
         getCommand("kitsettings").setExecutor(new KitSettingsCommand());
         getCommand("setspawn").setExecutor(new HermitKit());
         getCommand("stats").setExecutor(new StatsCommand(stats));
+        getCommand("forcepit").setExecutor(new ForcePitCommand(this));
     }
-
-
-    private void initKits() {
-        PluginManager pm = Bukkit.getPluginManager();
-        pm.registerEvents(new JackhammerKit(), this);
-        pm.registerEvents(new PhantomKit(), this);
-        pm.registerEvents(new SwitcherKit(), this);
-        pm.registerEvents(new WormKit(), this);
-        pm.registerEvents(new AnchorKit(), this);
-        pm.registerEvents(new DiggerKit(), this);
-        pm.registerEvents(new HulkKit(), this);
-        pm.registerEvents(new FiremanKit(), this);
-        pm.registerEvents(new FeastProtection(), this);
-        pm.registerEvents(new MagmaKit(), this);
-        pm.registerEvents(new AchillesKit(), this);
-        pm.registerEvents(new StomperKit(), this);
-        pm.registerEvents(new ScoutKit(), this);
-        pm.registerEvents(new BlinkKit(), this);
-        pm.registerEvents(new KangarooKit(), this);
-        pm.registerEvents(new FlashKit(), this);
-        pm.registerEvents(new KayaKit(), this);
-        pm.registerEvents(new VikingKit(), this);
-        pm.registerEvents(new TimelordKit(), this);
-        pm.registerEvents(new GladiatorKit(), this);
-        pm.registerEvents(new MonkKit(), this);
-        pm.registerEvents(new TankKit(), this);
-        pm.registerEvents(new NinjaKit(), this);
-        pm.registerEvents(new RevivalKit(), this);
-        pm.registerEvents(new KunaiKit(), this);
-        pm.registerEvents(new XrayKit(), this);
-        pm.registerEvents(new NeoKit(), this);
-        pm.registerEvents(new HermitKit(), this);
-    }
-
-
-
 
     public ArrayList<Player> getPlayers() {
         return players;
@@ -302,9 +265,6 @@ public final class HG extends JavaPlugin implements PluginMessageListener {
         this.playersAtStart = playersAtStart;
     }
 
-    public ItemManager getItemManager() {
-        return itemManager;
-    }
 
     public VanishManager getVanishManager() {
         return vanishManager;
@@ -324,10 +284,6 @@ public final class HG extends JavaPlugin implements PluginMessageListener {
 
     public SpectatorMode getSpecMode() {
         return specMode;
-    }
-
-    public DataSource getDataSource() {
-        return dataSource;
     }
 
     public StatsGetter getStats() {

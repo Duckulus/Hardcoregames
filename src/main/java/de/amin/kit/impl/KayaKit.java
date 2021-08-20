@@ -76,8 +76,9 @@ public class KayaKit extends Kit implements Listener {
     public void onBlockBreak(BlockBreakEvent e){
         if(!e.getBlock().getType().equals(Material.GRASS))return;
         if(kitManager.getKitHashMap().get(e.getPlayer().getName()) instanceof KayaKit){
-            e.getBlock().getDrops().clear();
-            e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(), new ItemStack(Material.GRASS));
+            e.setCancelled(true);
+            e.getPlayer().getInventory().addItem(new ItemStack(Material.GRASS));
+            e.getBlock().setType(Material.AIR);
         }
         blocks.remove(e.getBlock());
     }
@@ -88,7 +89,7 @@ public class KayaKit extends Kit implements Listener {
             @Override
             public void run() {
                 for(Player player : Bukkit.getOnlinePlayers()){
-                    if(HG.INSTANCE.getPlayers().contains(player)){
+                    if(HG.INSTANCE.getPlayers().contains(player) && !(kitManager.getKit(player) instanceof KayaKit)){
 
                             if(blocks.contains(player.getLocation().subtract(0,1,0).getBlock())){
                                 blocks.remove(player.getLocation().subtract(0,1,0).getBlock());

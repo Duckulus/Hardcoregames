@@ -17,6 +17,10 @@ public class ItemBuilder {
         this.item = itemstack;
     }
 
+    public ItemBuilder(Material m){
+        this.item = new ItemStack(m);
+    }
+
     public ItemBuilder addAllItemFlags() {
         ItemMeta meta = this.item.getItemMeta();
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);

@@ -4,6 +4,8 @@ package de.amin.stats;
 
 import de.amin.hardcoregames.HG;
 import de.amin.utils.UUIDFetcher;
+import jdk.tools.jlink.plugin.Plugin;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import javax.sql.DataSource;
@@ -16,13 +18,15 @@ import java.util.concurrent.CompletableFuture;
 public class StatsGetter {
 
     private final DataSource source;
+    private HG plugin;
 
-    public StatsGetter(DataSource source) {
+    public StatsGetter(HG plugin, DataSource source) {
+        this.plugin = plugin;
         this.source = source;
     }
 
     public void createTable() {
-        //if(!HG.isConnected)return;
+        if(!HG.isConnected)return;
         try (Connection con = source.getConnection();
              PreparedStatement stmt = con.prepareStatement("CREATE TABLE IF NOT EXISTS stats " +
                      "(PLAYER_UUID VARCHAR(255), NAME VARCHAR(255), KILLS INT, DEATHS INT, GAMESPLAYED INT, WINS INT, PRIMARY KEY (PLAYER_UUID))")) {
@@ -34,6 +38,7 @@ public class StatsGetter {
     }
 
     public void createPlayer(Player player){
+        if(!HG.isConnected)return;
         if(exists(player.getName()))return;
         try (Connection con = source.getConnection();
              PreparedStatement stmt = con.prepareStatement("INSERT IGNORE INTO stats (PLAYER_UUID, NAME, KILLS, DEATHS, GAMESPLAYED, WINS) VALUES (?,?,?,?,?,?)")){
@@ -93,7 +98,10 @@ public class StatsGetter {
     }
 
     public void increment(String player, String query){
-        set(player, query, get(player, query) + 1);
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, ()-> {
+            set(player, query, get(player, query) + 1);
+        });
+
     }
 
 

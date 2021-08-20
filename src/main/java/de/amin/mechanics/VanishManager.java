@@ -1,6 +1,6 @@
 //Created by Duckulus on 01 Jul, 2021 
 
-package de.amin.managers;
+package de.amin.mechanics;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

@@ -25,6 +25,7 @@ public class AuraCommand implements CommandExecutor{
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+        if(!sender.hasPermission("hg.aura"))return true;
         if(sender instanceof Player){
             Player player = (Player) sender;
             if(auraPlayers.contains(player)){

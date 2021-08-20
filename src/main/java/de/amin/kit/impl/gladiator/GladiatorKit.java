@@ -77,6 +77,7 @@ public class GladiatorKit extends Kit implements Listener {
         if (!(gameStateManager.getCurrentGameState() instanceof IngameState)) return;
         Player player = e.getPlayer();
         Player rightClicked = (Player) e.getRightClicked();
+        if(!HG.INSTANCE.getPlayers().contains(rightClicked)) return;
         if (!(kitManager.getKitHashMap().get(player.getName()) instanceof GladiatorKit)) return;
         if (player.getItemInHand() == null || !player.getItemInHand().getType().equals(Material.IRON_FENCE) || !player.getItemInHand().getItemMeta().spigot().isUnbreakable())
             return;

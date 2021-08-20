@@ -69,7 +69,9 @@ public class IngameTimer extends Countdown {
                 }else if(seconds == bonusFeastTime){
                     bonusfeast = new Bonusfeast();
                 }else if(seconds==pitTime){
-                    pit = new Pit();
+                    if(!Pit.isPitAnnounced){
+                        pit = new Pit();
+                    }
                 }else if(seconds == gameEndTime){
                     HG.INSTANCE.getGameStateManager().setGameState(GameState.ENDING_STATE);
                     Bukkit.getScheduler().cancelTask(taskID);
@@ -111,6 +113,10 @@ public class IngameTimer extends Countdown {
 
     public Pit getPit() {
         return pit;
+    }
+
+    public void setPit(Pit pit) {
+        this.pit = pit;
     }
 
     public int getPitTime() {

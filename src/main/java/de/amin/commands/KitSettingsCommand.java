@@ -14,7 +14,7 @@ public class KitSettingsCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
         if(!(sender instanceof Player))return true;
         Player player = (Player) sender;
-        if(!player.hasPermission("kit.settings"))return true;
+        if(!player.hasPermission("hg.kitsettings"))return true;
         KitSettingListInventory.INVENTORY.open(player);
         return false;
     }

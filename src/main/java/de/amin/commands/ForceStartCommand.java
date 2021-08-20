@@ -17,7 +17,7 @@ public class ForceStartCommand implements CommandExecutor {
         String prefix = HG.INSTANCE.PREFIX;
         if(sender instanceof Player){
             Player p = (Player) sender;
-            if(p.hasPermission("bw.start")){
+            if(p.hasPermission("hg.forcestart")){
                 if(args.length == 0){
                     GameStateManager gameStateManager = HG.INSTANCE.getGameStateManager();
                     if(gameStateManager.getCurrentGameState() instanceof LobbyState){

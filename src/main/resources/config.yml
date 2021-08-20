@@ -1,9 +1,12 @@
 database:
   host: " "
-  port: " "
+  port: "3306"
   datbase: " "
   username: " "
   password: " "
+scoreboard:
+  title: "§f§lHardcoreGames"
+  ip: "§f§ihardcoregames.hg"
 game:
   min_players: 2
 timers:

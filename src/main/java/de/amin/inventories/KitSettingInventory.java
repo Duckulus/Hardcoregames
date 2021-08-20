@@ -52,12 +52,12 @@ public class KitSettingInventory implements InventoryProvider {
         for (KitSetting setting : kit.getKitSettings()) {
             ArrayList<String> lore = new ArrayList<>();
             lore.add("§7" + setting.getValue());
-            lore.add("§7Click to change");
-            lore.add("§7Shiftclick to restore default value");
+            lore.add("§7Leftclick to change");
+            lore.add("§7Rightclick to restore default value");
             ItemStack item = new ItemBuilder(new ItemStack(Material.COMMAND)).setDisplayName("§b" + setting.getName()).setLore(lore).getItem();
 
             items[i] = ClickableItem.of(item, e -> {
-                if(e.getClick().equals(ClickType.SHIFT_LEFT) || e.getClick().equals(ClickType.SHIFT_RIGHT)){
+                if(e.getClick().equals(ClickType.RIGHT) || e.getClick().equals(ClickType.SHIFT_RIGHT)){
                     setting.restoreDefault();
                     player.closeInventory();
                     Bukkit.getScheduler().scheduleSyncDelayedTask(HG.INSTANCE, () -> {

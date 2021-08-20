@@ -35,7 +35,7 @@ public class DeathListener implements Listener {
     public void onRespawn(PlayerRespawnEvent e){
         World world = Bukkit.getWorld("world");
         Bukkit.getScheduler().scheduleSyncDelayedTask(HG.INSTANCE, () -> e.getPlayer().teleport(new Location(world, 0, world.getHighestBlockYAt(0,0), 0)), 1);
-        if(e.getPlayer().hasPermission("admin.adminmode")){
+        if(e.getPlayer().hasPermission("hg.adminmode")){
             HG.INSTANCE.getAdminMode().activate(e.getPlayer());
         }else {
             HG.INSTANCE.getSpecMode().activate(e.getPlayer());

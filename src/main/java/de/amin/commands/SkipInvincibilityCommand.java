@@ -13,6 +13,7 @@ public class SkipInvincibilityCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+        if(!sender.hasPermission("hg.skipinvis"))return true;
         if(!(HG.INSTANCE.getGameStateManager().getCurrentGameState() instanceof InvincibilityState)){
             sender.sendMessage(HG.INSTANCE.PREFIX + "§cInvincibility is not active at the moment!");
             return true;

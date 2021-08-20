@@ -2,9 +2,15 @@
 
 package de.amin.mechanics;
 
+import com.sk89q.worldedit.*;
+import com.sk89q.worldedit.blocks.BaseBlock;
+import com.sk89q.worldedit.function.pattern.BlockPattern;
+import com.sk89q.worldedit.internal.LocalWorldAdapter;
+import com.sk89q.worldedit.patterns.Pattern;
 import de.amin.hardcoregames.HG;
 import de.amin.kit.impl.gladiator.Gladiator;
 import org.bukkit.*;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -30,9 +36,21 @@ public class Pit {
         runDamage();
     }
 
-    private void runPit() {
+    public void runPit() {
         isPitAnnounced = true;
         taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(HG.INSTANCE, () -> {
+
+            if(isPit) {
+                Bukkit.getScheduler().cancelTask(taskID);
+                Bukkit.broadcastMessage(hg.PREFIX + "§7Pit Deathmatch is starting!");
+                for(Gladiator g : Gladiator.getGladiators()){
+                    g.end();
+                }
+                spawnPit();
+                teleportPlayers();
+                removeEntities();
+            }
+
             switch (seconds) {
                 case 5 * 60:
                 case 4 * 60:
@@ -53,6 +71,7 @@ public class Pit {
                     }
                     break;
                 case 0:
+                    Bukkit.getScheduler().cancelTask(taskID);
                     Bukkit.broadcastMessage(hg.PREFIX + "§7Pit Deathmatch is starting!");
                     for(Gladiator g : Gladiator.getGladiators()){
                         g.end();

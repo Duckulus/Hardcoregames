@@ -3,7 +3,6 @@
 package de.amin.mechanics;
 
 import de.amin.hardcoregames.HG;
-import de.amin.managers.VanishManager;
 import de.amin.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

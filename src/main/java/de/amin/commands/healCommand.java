@@ -15,7 +15,7 @@ public class healCommand implements CommandExecutor {
         if(!(sender instanceof Player)){return true;}
         Player p = (Player) sender;
 
-        if(!p.hasPermission("hardcoregames.heal")){
+        if(!p.hasPermission("hg.heal")){
             p.sendMessage(HG.INSTANCE.PREFIX + "§cInsufficient Permissions");
             return true;}
 
