@@ -1,0 +1,14 @@
+de.amin.commands
+de.amin.countdowns
+de.amin.feast
+de.amin.gamestates
+de.amin.hardcoregames
+de.amin.inventories
+de.amin.kit
+de.amin.kit.impl
+de.amin.kit.impl.gladiator
+de.amin.listeners
+de.amin.mechanics
+de.amin.mechanics.conversation
+de.amin.stats
+de.amin.utils
