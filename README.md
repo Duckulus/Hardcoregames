@@ -1,5 +1,6 @@
 # Hardcoregames
 ---
+
 A Minecraft Plugin for Spigot 1.8. It's a basic version of the famous Minecraft PvP Gamemode Hardcoregames.
 
 ## Stats
