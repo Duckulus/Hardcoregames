@@ -4,7 +4,6 @@ package de.amin.stats;
 
 import de.amin.hardcoregames.HG;
 import de.amin.utils.UUIDFetcher;
-import jdk.tools.jlink.plugin.Plugin;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -13,7 +12,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.concurrent.CompletableFuture;
 
 public class StatsGetter {
 
