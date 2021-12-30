@@ -39,7 +39,6 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <outputFile>C:\Users\Amin\Desktop\Netzwerk\HG1\plugins\Hardcoregames.jar</outputFile>
                         </configuration>
                     </execution>
                 </executions>

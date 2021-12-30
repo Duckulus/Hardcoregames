@@ -185,7 +185,6 @@ public final class HG extends JavaPlugin implements PluginMessageListener {
         getCommand("up").setExecutor(new upCommand());
         getCommand("fs").setExecutor(new ForceStartCommand());
         getCommand("skipinvis").setExecutor(new SkipInvincibilityCommand());
-        getCommand("ping").setExecutor(new PingCommand());
         getCommand("randomtp").setExecutor(new RandomTeleportCommand());
         getCommand("getkit").setExecutor(new GetKitCommand());
         getCommand("gm").setExecutor(new GameModeCommand());
@@ -208,6 +207,7 @@ public final class HG extends JavaPlugin implements PluginMessageListener {
         getCommand("setspawn").setExecutor(new HermitKit());
         getCommand("stats").setExecutor(new StatsCommand(stats));
         getCommand("forcepit").setExecutor(new ForcePitCommand(this));
+        getCommand("ping").setExecutor(new PingCommand());
     }
 
     public ArrayList<Player> getPlayers() {
