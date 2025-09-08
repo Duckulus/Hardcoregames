@@ -27,7 +27,7 @@ public class FeastCommand implements CommandExecutor {
         }
         Feast feast = ((IngameState) HG.INSTANCE.getGameStateManager().getCurrentGameState()).getTimer().getFeast();
         if(Feast.isAnnounced()){
-            player.setCompassTarget(new Location(Bukkit.getWorld("world"), feast.getxPos(), feast.getyPos(), feast.getzPos()));
+            player.setCompassTarget(new Location(Bukkit.getWorlds().get(0), feast.getxPos(), feast.getyPos(), feast.getzPos()));
             player.sendMessage("§eTracker is now pointing at feast.");
         }else {
             player.sendMessage("§eFeasts location is not known yet.");

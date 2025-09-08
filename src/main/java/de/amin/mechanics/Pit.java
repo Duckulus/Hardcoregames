@@ -89,7 +89,7 @@ public class Pit {
         Bukkit.getScheduler().scheduleSyncDelayedTask(HG.INSTANCE, new Runnable() {
             @Override
             public void run() {
-                for(Entity e : Bukkit.getWorld("world").getEntities()){
+                for(Entity e : Bukkit.getWorlds().get(0).getEntities()){
                     if(!(e instanceof Player)){
                         e.remove();
                     }
@@ -128,7 +128,7 @@ public class Pit {
     }
 
     private Location getRandomPitLocation(){
-        World world = Bukkit.getWorld("world");
+        World world = Bukkit.getWorlds().get(0);
         Location location = new Location(world, 0, 0, 0);
         location.setY(16);
         location.setX(ThreadLocalRandom.current().nextInt(-radius/2, radius/2));
@@ -148,9 +148,9 @@ public class Pit {
 
     private void createCylinder() {
         for (int i = 15; i < 200 ; i++) {
-            spawnCircle(new Location(Bukkit.getWorld("world"), 0, i, 0), radius, Material.AIR);
+            spawnCircle(new Location(Bukkit.getWorlds().get(0), 0, i, 0), radius, Material.AIR);
         }
-        spawnCircle(new Location(Bukkit.getWorld("world"), 0, 15, 0), radius, Material.STONE);
+        spawnCircle(new Location(Bukkit.getWorlds().get(0), 0, 15, 0), radius, Material.STONE);
     }
 
     public void spawnCircle(Location loc, int radius, Material m) {

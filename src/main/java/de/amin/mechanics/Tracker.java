@@ -27,7 +27,7 @@ public class Tracker implements Listener {
                 player.setCompassTarget(target.getLocation());
                 player.sendMessage("§eTracker is now pointing at " + target.getName() + ".");
             } else {
-                player.setCompassTarget(new Location(Bukkit.getWorld("world"), 0, 0, 0));
+                player.setCompassTarget(new Location(Bukkit.getWorlds().get(0), 0, 0, 0));
                 player.sendMessage("§eNo target found. Tracker is now pointing at spawn");
             }
         }

@@ -49,9 +49,9 @@ public class Minifeast {
 
         xPos = ThreadLocalRandom.current().nextInt(bordersize * -1 + radius, bordersize - radius);
         zPos = ThreadLocalRandom.current().nextInt(bordersize * -1 + radius, bordersize - radius);
-        yPos = Bukkit.getWorld("world").getHighestBlockYAt(xPos, yPos) + 1;
+        yPos = Bukkit.getWorlds().get(0).getHighestBlockYAt(xPos, yPos) + 1;
 
-        location = new Location(Bukkit.getWorld("world"), xPos, yPos, zPos);
+        location = new Location(Bukkit.getWorlds().get(0), xPos, yPos, zPos);
 
         radius = 3;
 

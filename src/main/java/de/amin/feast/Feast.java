@@ -38,7 +38,7 @@ public class Feast {
 
         xPos = ThreadLocalRandom.current().nextInt(-100, 100);
         zPos = ThreadLocalRandom.current().nextInt(-100, 100);
-        yPos = Bukkit.getWorld("world").getHighestBlockYAt(xPos, zPos) + 1;
+        yPos = Bukkit.getWorlds().get(0).getHighestBlockYAt(xPos, zPos) + 1;
 
         blocks = new ArrayList<>();
 
@@ -104,7 +104,7 @@ public class Feast {
                 if(Feast.isFeast)Bukkit.getScheduler().cancelTask(taskID);
                 switch (secondsToFeast) {
                     case 119:
-                        for(Entity e : Bukkit.getWorld("world").getNearbyEntities(new Location(Bukkit.getWorld("world"), xPos, yPos, zPos), 30, 30, 30)){
+                        for(Entity e : Bukkit.getWorlds().get(0).getNearbyEntities(new Location(Bukkit.getWorlds().get(0), xPos, yPos, zPos), 30, 30, 30)){
                             if(e.getType().equals(EntityType.DROPPED_ITEM)){
                                 e.remove();
                             }
@@ -148,9 +148,9 @@ public class Feast {
 
 
     private void spawnFeast() {
-        spawnCircle(new Location(Bukkit.getWorld("world"), xPos, yPos, zPos), 20, Material.GRASS);
+        spawnCircle(new Location(Bukkit.getWorlds().get(0), xPos, yPos, zPos), 20, Material.GRASS);
         for (int i = yPos+1; i <200 ; i++) {
-            spawnCircle(new Location(Bukkit.getWorld("world"), xPos, i, zPos), 20, Material.AIR);
+            spawnCircle(new Location(Bukkit.getWorlds().get(0), xPos, i, zPos), 20, Material.AIR);
         }
     }
 
@@ -169,7 +169,7 @@ public class Feast {
     }
 
     public void spawnChests() {
-        Location location = new Location(Bukkit.getWorld("world"), xPos, yPos, zPos);
+        Location location = new Location(Bukkit.getWorlds().get(0), xPos, yPos, zPos);
         Location origin = location.clone().add(0,1,0);
         origin.clone().getBlock().setType(Material.ENCHANTMENT_TABLE);
 

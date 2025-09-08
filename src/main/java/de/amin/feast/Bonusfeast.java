@@ -31,9 +31,9 @@ public class Bonusfeast {
         loot = ((IngameState)HG.INSTANCE.getGameStateManager().getCurrentGameState()).getTimer().getFeast().getFeastLoot();
         int x = ThreadLocalRandom.current().nextInt(WorldBorder.size*-1 + 20, WorldBorder.size-20);
         int z = ThreadLocalRandom.current().nextInt(WorldBorder.size*-1 + 20, WorldBorder.size-20);
-        int y = Bukkit.getWorld("world").getHighestBlockYAt(x,z);
+        int y = Bukkit.getWorlds().get(0).getHighestBlockYAt(x,z);
 
-        Location location = new Location(Bukkit.getWorld("world"), x,y,z);
+        Location location = new Location(Bukkit.getWorlds().get(0), x,y,z);
         biome = location.getBlock().getBiome();
 
         Bukkit.broadcastMessage(HG.INSTANCE.PREFIX + "§7The Bonusfeast spawned in a " + biome.toString() + " biome.");

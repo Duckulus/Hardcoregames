@@ -54,7 +54,7 @@ public class ConnectionListener implements Listener {
 
             e.getPlayer().getInventory().clear();
             giveItems(e.getPlayer());
-            Location spawn = new Location(Bukkit.getWorld("world"), 0, 0, 0);
+            Location spawn = new Location(Bukkit.getWorlds().get(0), 0, 0, 0);
             e.getPlayer().teleport(getHighestPoint(spawn));
 
 
@@ -147,7 +147,7 @@ public class ConnectionListener implements Listener {
     public static Location getHighestPoint(Location loc) {
         for (int i = 256; i > 0; i--) {
             loc.setY(i);
-            if (!loc.getBlock().getType().equals(Material.AIR)) {
+            if (loc.getBlock()!=null && !loc.getBlock().getType().equals(Material.AIR)) {
                 loc.setY(loc.getY() + 1);
                 return loc;
             }
